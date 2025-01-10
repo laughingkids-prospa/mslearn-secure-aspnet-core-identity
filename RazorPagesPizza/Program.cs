@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using RazorPagesPizza.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using RazorPagesPizza.Services;
+using QRCoder;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("RazorPagesPizzaAuthConnection") ?? throw new InvalidOperationException("Connection string 'RazorPagesPizzaAuthConnection' not found.");
@@ -14,6 +15,7 @@ builder.Services.AddDefaultIdentity<RazorPagesPizzaUser>(options => options.Sign
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.AddSingleton(new QRCodeService(new QRCodeGenerator()));
 
 var app = builder.Build();
 
